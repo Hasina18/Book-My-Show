@@ -2,14 +2,7 @@ pipeline {
     agent any
 
     environment {
-        SCANNER_HOME = tool 'sonar-scanner'
-        DOCKER_IMAGE = 'akshu20791/bms:latest'
-        EKS_CLUSTER_NAME = 'akshat-eks'
-        AWS_REGION = 'us-east-1'
-    }
-
-    stages {
-        stage('Clean Workspace') {
+k        stage('Clean Workspace') {
             steps {
                 cleanWs()
             }
@@ -58,12 +51,6 @@ pipeline {
             }
         }
 
-        stage('OWASP FS Scan') {
-            steps {
-                dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'DP-Check'
-                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-            }
-        }
 
         stage('Trivy FS Scan') {
             steps {
